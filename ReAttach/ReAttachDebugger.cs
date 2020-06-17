@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using EnvDTE80;
@@ -139,7 +140,8 @@ namespace ReAttach
 
 			var user = GetProcessUsername(pid);
 			var path = process.GetFilename();
-			target = new ReAttachTarget(pid, path, user, serverName);
+			var version = GetFileVersion(path);
+			target = new ReAttachTarget(pid, path, version, user, serverName);
 
 			var rawEngines = new GUID_ARRAY[1];
 
@@ -232,5 +234,20 @@ namespace ReAttach
 
 			return result;
 		}
+
+		private string GetFileVersion(string path)
+		{
+			var version = "";
+			if (!string.IsNullOrWhiteSpace(path))
+			{
+				FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(path);
+				if (versionInfo != null)
+				{
+					version = versionInfo.FileVersion;
+				}
+			}
+			return (version);
+		}
+
 	}
 }

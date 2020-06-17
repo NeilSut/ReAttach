@@ -9,7 +9,6 @@ namespace ReAttach.Data
 	{
 		public int ProcessId { get; set; }
 		public string ProcessName { get; set; }
-		public string ProcessVersion { get; set; }
 		public string ProcessPath { get; set; }
 		public string ProcessUser { get; set; }
 		public string ServerName { get; set; }
@@ -17,7 +16,7 @@ namespace ReAttach.Data
 		public bool IsLocal { get { return string.IsNullOrEmpty(ServerName); } }
 		public List<Guid> Engines { get; set; }
 
-		public ReAttachTarget(int pid, string path, string version, string user, string serverName = "") 
+		public ReAttachTarget(int pid, string path, string user, string serverName = "") 
 		{
 			try
 			{
@@ -27,7 +26,6 @@ namespace ReAttach.Data
 			{
 				ProcessName = Sanitize(path);
 			}
-			ProcessVersion = version;
 			ProcessId = pid;
 			ProcessPath = Sanitize(path);
 			ProcessUser = user ?? "";
@@ -55,8 +53,8 @@ namespace ReAttach.Data
 		public override string ToString()
 		{
 			return IsLocal ? 
-				string.Format("{0} {1} ({2})", ProcessName, string.IsNullOrWhiteSpace(ProcessVersion) ? "" : ProcessVersion, ProcessUser) : 
-				string.Format("{0} {1} ({2}@{3})", ProcessName, string.IsNullOrWhiteSpace(ProcessVersion) ? "" : ProcessVersion, ProcessUser, ServerName);
+				string.Format("{0} ({1})", ProcessName, ProcessUser) : 
+				string.Format("{0} ({1}@{2})", ProcessName, ProcessUser, ServerName);
 		}
 
 		public static string Sanitize(string str) 

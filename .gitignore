@@ -21,3 +21,8 @@ Ankh.NoLoad
 # Resharper
 *[Rr]e[Ss]harper.user
 _ReSharper.*/
+/ReAttach/packages.config.orig
+/ReAttach/ReAttach.csproj.mod
+/ReAttach/ReAttach.csproj.orig
+/UpgradeLog.htm
+/UpgradeLog2.htm
